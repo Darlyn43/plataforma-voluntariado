@@ -6,6 +6,25 @@ import { analyzeImpactMetrics } from "./services/openai";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Demo login endpoint
+  app.post("/api/auth/demo-login", async (req, res) => {
+    try {
+      const demoUser = await storage.getUserByEmail("maria.garcia@manuchar.com");
+      
+      if (!demoUser) {
+        return res.status(404).json({ error: "Usuario demo no encontrado" });
+      }
+      
+      res.json({ 
+        user: demoUser,
+        message: "Sesión iniciada como María García (Demo)"
+      });
+    } catch (error) {
+      console.error("Error en demo login:", error);
+      res.status(500).json({ error: "Error del servidor" });
+    }
+  });
+
   // User profile routes
   app.get("/api/users/:id", async (req, res) => {
     try {

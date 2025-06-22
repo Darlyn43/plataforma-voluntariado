@@ -65,6 +65,16 @@ export function LoginForm() {
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Manuchar Perú</h1>
           <h2 className="text-xl font-semibold text-gray-700 mb-2">Voluntariado Corporativo</h2>
           <p className="text-gray-600">Conecta con oportunidades de impacto social</p>
+          
+          <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+            <p className="text-sm text-blue-800 mb-2">¿Quieres explorar la plataforma?</p>
+            <a 
+              href="/demo" 
+              className="inline-block px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-colors"
+            >
+              Probar Perfil Demo
+            </a>
+          </div>
         </div>
 
         <Card className="shadow-lg">

@@ -106,6 +106,87 @@ export class MemStorage implements IStorage {
   }
 
   private initializeDefaultData() {
+    // Create demo user profile
+    const demoUser: User = {
+      id: this.currentUserId++,
+      firebaseUid: "demo-user-maria-garcia",
+      email: "maria.garcia@manuchar.com",
+      firstName: "María",
+      lastName: "García",
+      department: "Recursos Humanos",
+      location: "Lima",
+      role: "employee",
+      interests: ["educación", "medio ambiente", "desarrollo comunitario"],
+      isFirstLogin: false,
+      profileCompleted: true,
+      testsCompleted: true,
+
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+
+    this.users.set(demoUser.id, demoUser);
+
+    // Create demo psychological assessment
+    const demoAssessment: PsychologicalAssessment = {
+      id: this.currentAssessmentId++,
+      userId: demoUser.id,
+      testType: "gallup_strengths",
+      responses: {
+        "empathy": 5,
+        "strategic": 4,
+        "communication": 5,
+        "responsibility": 4,
+        "achiever": 4,
+        "adaptability": 3,
+        "analytical": 3,
+        "arranger": 2,
+        "belief": 4,
+        "command": 2
+      },
+      results: {
+        topStrength: "Communication",
+        personalityProfile: {
+          empathy: 5,
+          strategic: 4,
+          communication: 5,
+          responsibility: 4,
+          achiever: 4
+        },
+        strengthDistribution: {
+          "Communication": 5,
+          "Empathy": 5,
+          "Strategic": 4,
+          "Responsibility": 4,
+          "Achiever": 4
+        },
+        recommendations: [
+          "Tu fortaleza en comunicación te hace ideal para proyectos educativos",
+          "Usa tu empatía para conectar con comunidades vulnerables",
+          "Tu pensamiento estratégico puede ayudar en planificación de proyectos"
+        ]
+      },
+      completedAt: new Date()
+    };
+
+    this.assessments.set(demoAssessment.id, demoAssessment);
+
+    // Create demo participation
+    const demoParticipation: Participation = {
+      id: this.currentParticipationId++,
+      userId: demoUser.id,
+      opportunityId: 1,
+      status: "completed",
+      joinedAt: new Date("2024-11-15"),
+      completedAt: new Date("2024-11-15"),
+      rating: 5,
+      feedback: "Excelente experiencia. Los materiales estuvieron muy bien preparados y el impacto en los jóvenes fue notable.",
+      hoursCompleted: 4,
+
+    };
+
+    this.participations.set(demoParticipation.id, demoParticipation);
+
     // Initialize default badges
     const defaultBadges: Badge[] = [
       {
@@ -237,6 +318,29 @@ export class MemStorage implements IStorage {
     defaultOpportunities.forEach(opportunity => {
       this.opportunities.set(opportunity.id, opportunity);
     });
+
+    // Award demo user their first badge
+    const demoBadge: UserBadge = {
+      id: this.currentUserBadgeId++,
+      userId: demoUser.id,
+      badgeId: 3, // Helper badge
+      earnedAt: new Date("2024-11-15")
+    };
+
+    this.userBadges.set(demoBadge.id, demoBadge);
+
+    // Create demo notification
+    const demoNotification: Notification = {
+      id: this.currentNotificationId++,
+      userId: demoUser.id,
+      title: "¡Felicitaciones por tu primera participación!",
+      message: "Has completado exitosamente el taller de educación financiera. Tu contribución ha sido valiosa para la comunidad.",
+      type: "achievement",
+      isRead: false,
+      createdAt: new Date("2024-11-15")
+    };
+
+    this.notifications.set(demoNotification.id, demoNotification);
   }
 
   // User methods

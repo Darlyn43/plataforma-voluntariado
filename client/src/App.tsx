@@ -11,6 +11,7 @@ import LoginPage from "@/pages/login";
 import OnboardingPage from "@/pages/onboarding";
 import EmployeeDashboardPage from "@/pages/employee-dashboard";
 import AdminDashboardPage from "@/pages/admin-dashboard";
+import DemoLoginPage from "@/pages/demo-login";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -27,6 +28,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/login" component={LoginPage} />
+      <Route path="/demo" component={DemoLoginPage} />
       <Route path="/onboarding" component={OnboardingPage} />
       <Route path="/dashboard">
         {user?.profile?.role === 'admin' ? <AdminDashboardPage /> : <EmployeeDashboardPage />}
