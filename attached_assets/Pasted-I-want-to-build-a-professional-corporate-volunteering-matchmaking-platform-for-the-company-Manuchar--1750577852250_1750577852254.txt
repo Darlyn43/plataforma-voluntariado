@@ -1,0 +1,103 @@
+I want to build a professional corporate volunteering matchmaking platform for the company Manuchar Perú. The project must be a full-stack web application in React with Tailwind CSS, hosted on Netlify, and use Firebase for authentication, database, and backend functions.
+
+❗️Important:
+
+The entire platform must be in Spanish.
+
+The psychological tests (Gallup Strengths and Eysenck Personality Inventory - EPI) must be implemented professionally, with real psychological logic behind the results and proper data processing to improve recommendation accuracy.
+
+💡 Main Features
+1. Authentication
+Sign in and sign up with Firebase Auth (email & password).
+
+Force password change on first login.
+
+Two user roles: Employee and Administrator.
+
+2. User Profile & Psychological Tests
+After login, the user must complete:
+
+Gallup Strengths Test (custom implementation).
+
+Eysenck Personality Inventory (EPI).
+
+Results must be stored in Firebase Firestore, with visual feedback.
+
+Use results to generate a personalized volunteer profile.
+
+3. AI-Based Matching
+Use AI (OpenAI or similar) to suggest volunteering opportunities based on test results and user interests.
+
+Divide activities into:
+
+Labs de voluntariado: short, quick-impact actions (e.g., 1-day events).
+
+Misiones sociales: long-term, skill-based volunteering.
+
+4. Admin Dashboard
+Dashboard showing:
+
+Hours volunteered, SDG targets achieved (especially SDG 8 & 17), user participation.
+
+Filters by location, department, type of project.
+
+Impact metrics and satisfaction ratings in real time.
+
+5. Badges, Levels & Certificates
+Implement badges by participation level (e.g., beginner, intermediate, leader).
+
+Use POAP blockchain to issue verifiable certificates.
+
+Allow exporting and linking badges to LinkedIn or other resumes.
+
+6. Recognition and Motivation
+After each volunteering activity:
+
+Ask for self-evaluation of skill development.
+
+Reward with points, badges, and certificates.
+
+Enable employees to nominate coworkers to do a volunteering mission.
+
+Publish success stories in a blog-style impact wall.
+
+7. Notifications
+Weekly reminders via email using Firebase Functions.
+
+In-app notifications for upcoming activities and recognition.
+
+8. Security
+Comply with Peruvian Data Protection Law.
+
+Ensure encryption for sensitive data and private credentials.
+
+9. Technologies
+Frontend: React + Tailwind CSS
+
+Backend: Firebase (Auth, Firestore, Functions, Storage)
+
+AI: OpenAI or similar API for volunteer matching
+
+Blockchain: POAP API for certificates
+
+🗂 Project Structure
+Modular folder structure: auth/, tests/, matching/, dashboard/, components/, etc.
+
+Add .env.template, README.md, and test coverage setup.
+
+All code comments and labels in Spanish.
+
+✅ Testing
+Add unit tests for:
+
+Auth logic
+
+AI matching function
+
+Test result processing
+
+Certificate generation
+
+Dashboard statistics
+
+Please make the UI professional, modern, clean, with a simple onboarding flow. Prioritize responsiveness and accessibility.
