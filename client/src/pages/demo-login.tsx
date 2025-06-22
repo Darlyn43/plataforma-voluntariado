@@ -2,34 +2,34 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { User, Heart, Award, Calendar } from "lucide-react";
-import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
+import { useDemoAuth } from "@/hooks/useDemoAuth";
 
 export default function DemoLoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const [, setLocation] = useLocation();
+  const { loginDemo } = useDemoAuth();
 
   const handleDemoLogin = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("/api/auth/demo-login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.ok) {
-        const data = await response.json();
+      const result = await loginDemo();
+      
+      if (result.success) {
         toast({
           title: "Acceso Demo Exitoso",
-          description: data.message,
+          description: result.message,
         });
-        setLocation("/dashboard");
+        // Redirect to demo dashboard
+        window.location.href = "/demo-dashboard";
       } else {
-        throw new Error("Error en el acceso demo");
+        toast({
+          title: "Error",
+          description: result.error,
+          variant: "destructive",
+        });
       }
     } catch (error) {
       toast({
