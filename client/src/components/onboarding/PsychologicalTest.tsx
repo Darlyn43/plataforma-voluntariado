@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { saveAssessmentResults } from '@/lib/firebase';
+import { saveTestResult } from '@/lib/userProfile';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
