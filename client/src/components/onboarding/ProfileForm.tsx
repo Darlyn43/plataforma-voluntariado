@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { createUserProfile } from '@/lib/firebase';
+import { saveUserProfile } from '@/lib/userProfile';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -84,10 +84,9 @@ export function ProfileForm({ onComplete }: ProfileFormProps) {
     
     setIsLoading(true);
     try {
-      await createUserProfile(user.uid, {
-        ...data,
-        email: user.email,
-        firebaseUid: user.uid,
+      await saveUserProfile({
+        uid: user.uid,
+        name: `${data.firstName} ${data.lastName}`,
         role: 'employee',
       });
 

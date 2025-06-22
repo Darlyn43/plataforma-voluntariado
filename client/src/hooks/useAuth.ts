@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { User as FirebaseUser } from 'firebase/auth';
-import { onAuthChange, getUserProfile } from '@/lib/firebase';
+import { supabase } from '@/lib/supabase';
 
 interface AuthUser {
   uid: string;
@@ -13,21 +12,55 @@ export const useAuth = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthChange(async (firebaseUser: FirebaseUser | null) => {
-      if (firebaseUser) {
-        const profile = await getUserProfile(firebaseUser.uid);
+    // Escuchar cambios de sesion (login/logout)
+    const { data: listener } = supabase.auth.onAuthStateChange(async (event, session) => {
+      const currentUser = session?.user;
+
+      if (currentUser) {
+        const { data: profile, error } = await supabase
+          .from('users')
+          .select('*')
+          .eq('id', currentUser.id)
+          .single();
+
         setUser({
-          uid: firebaseUser.uid,
-          email: firebaseUser.email!,
-          profile,
+          uid: currentUser.id,
+          email: currentUser.email!,
+          profile: profile || {},
         });
       } else {
         setUser(null);
       }
+
       setLoading(false);
     });
 
-    return unsubscribe;
+    // Al cargar la app: revisar si ya hay un usuario logueado
+    const init = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      const currentUser = session?.user;
+
+      if (currentUser) {
+        const { data: profile, error } = await supabase
+          .from('users')
+          .select('*')
+          .eq('id', currentUser.id)
+          .single();
+
+        setUser({
+          uid: currentUser.id,
+          email: currentUser.email!,
+          profile: profile || {},
+        });
+      }
+      setLoading(false);
+    };
+
+    init();
+
+    return () => {
+      listener?.subscription.unsubscribe();
+    };
   }, []);
 
   return { user, loading };
