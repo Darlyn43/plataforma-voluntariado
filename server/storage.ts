@@ -257,6 +257,11 @@ export class MemStorage implements IStorage {
     const user: User = {
       ...insertUser,
       id,
+      role: insertUser.role || "employee",
+      isFirstLogin: insertUser.isFirstLogin ?? true,
+      profileCompleted: insertUser.profileCompleted ?? false,
+      testsCompleted: insertUser.testsCompleted ?? false,
+      interests: insertUser.interests || [],
       createdAt: new Date(),
       updatedAt: new Date()
     };
@@ -330,7 +335,11 @@ export class MemStorage implements IStorage {
     const opportunity: VolunteerOpportunity = {
       ...insertOpportunity,
       id,
+      endDate: insertOpportunity.endDate || null,
       currentVolunteers: 0,
+      skills: insertOpportunity.skills || [],
+      sdgs: insertOpportunity.sdgs || [],
+      isActive: insertOpportunity.isActive ?? true,
       createdAt: new Date()
     };
     this.opportunities.set(id, opportunity);
@@ -366,6 +375,10 @@ export class MemStorage implements IStorage {
     const participation: Participation = {
       ...insertParticipation,
       id,
+      status: insertParticipation.status || "applied",
+      hoursCompleted: insertParticipation.hoursCompleted || null,
+      feedback: insertParticipation.feedback || null,
+      rating: insertParticipation.rating || null,
       joinedAt: new Date(),
       completedAt: null
     };
