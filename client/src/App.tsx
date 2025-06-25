@@ -16,7 +16,7 @@ import DemoLoginPage from "@/pages/demo-login";
 import DemoDashboardPage from "@/pages/demo-dashboard";
 import NotFound from "@/pages/not-found";
 
-function Router() {
+function () {
   const { user, loading } = useAuth();
   const { user: demoUser, loading: demoLoading } = useDemoAuth();
 
@@ -63,7 +63,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
-        <Router />
+        < />
       </TooltipProvider>
     </QueryClientProvider>
   );
