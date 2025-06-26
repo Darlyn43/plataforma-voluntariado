@@ -134,4 +134,23 @@ export function LoginForm() {
                 <p className="text-sm text-gray-600">
                   ¿Primera vez?{' '}
                   <button
-                    t
+                    type="button"
+                    className="font-medium text-primary hover:text-blue-500 transition-colors"
+                    onClick={() =>
+                      toast({
+                        title: "Registro",
+                        description: "Contacta al administrador para crear una cuenta nueva.",
+                      })
+                    }
+                  >
+                    Crear cuenta
+                  </button>
+                </p>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}
