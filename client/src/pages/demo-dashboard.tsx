@@ -15,7 +15,7 @@ import {
   ArrowLeft 
 } from "lucide-react";
 
-interface DemoUser {
+interface User {
   id: number;
   firstName: string;
   lastName: string;
@@ -25,7 +25,7 @@ interface DemoUser {
   interests: string[];
 }
 
-interface DemoAssessment {
+interface Assessment {
   topStrength: string;
   personalityProfile: {
     empathy: number;
@@ -37,7 +37,7 @@ interface DemoAssessment {
   recommendations: string[];
 }
 
-interface DemoOpportunity {
+interface Opportunity {
   id: number;
   title: string;
   description: string;
@@ -49,8 +49,8 @@ interface DemoOpportunity {
   matchPercentage: number;
 }
 
-export default function DemoDashboardPage() {
-  const [user] = useState<DemoUser>({
+export default function DashboardPage() {
+  const [user] = useState<User>({
     id: 1,
     firstName: "María",
     lastName: "García",
@@ -60,7 +60,7 @@ export default function DemoDashboardPage() {
     interests: ["educación", "medio ambiente", "desarrollo comunitario"]
   });
 
-  const [assessment] = useState<DemoAssessment>({
+  const [assessment] = useState<Assessment>({
     topStrength: "Communication",
     personalityProfile: {
       empathy: 5,
@@ -76,7 +76,7 @@ export default function DemoDashboardPage() {
     ]
   });
 
-  const [opportunities] = useState<DemoOpportunity[]>([
+  const [opportunities] = useState<Opportunity[]>([
     {
       id: 1,
       title: "Taller de Alfabetización Digital",
@@ -128,12 +128,12 @@ export default function DemoDashboardPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Demo Header */}
+      {/*  Header */}
       <div className="bg-blue-600 text-white p-3">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <span className="bg-blue-800 px-2 py-1 rounded text-sm font-medium">DEMO</span>
-            <span>Perfil de demostración - María García</span>
+            <span className="bg-blue-800 px-2 py-1 rounded text-sm font-medium"></span>
+            <span>Perfil de stración - María García</span>
           </div>
           <Button variant="secondary" size="sm" onClick={() => window.location.href = "/login"}>
             <ArrowLeft className="w-4 h-4 mr-1" />

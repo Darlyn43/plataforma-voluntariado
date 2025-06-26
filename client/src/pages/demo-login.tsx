@@ -4,26 +4,26 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { User, Heart, Award, Calendar } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
-import { useDemoAuth } from "@/hooks/useDemoAuth";
+import { useAuth } from "@/hooks/useAuth";
 
-export default function DemoLoginPage() {
+export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const [, setLocation] = useLocation();
-  const { loginDemo } = useDemoAuth();
+  const { login } = useAuth();
 
-  const handleDemoLogin = async () => {
+  const handleLogin = async () => {
     setIsLoading(true);
     try {
-      const result = await loginDemo();
+      const result = await login();
       
       if (result.success) {
         toast({
-          title: "Acceso Demo Exitoso",
+          title: "Acceso  Exitoso",
           description: result.message,
         });
-        // Redirect to demo dashboard
-        window.location.href = "/demo-dashboard";
+        // Redirect to  dashboard
+        window.location.href = "/-dashboard";
       } else {
         toast({
           title: "Error",
@@ -34,7 +34,7 @@ export default function DemoLoginPage() {
     } catch (error) {
       toast({
         title: "Error",
-        description: "No se pudo acceder al perfil demo",
+        description: "No se pudo acceder al perfil ",
         variant: "destructive",
       });
     } finally {
@@ -55,13 +55,13 @@ export default function DemoLoginPage() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
-          {/* Demo Profile Card */}
+          {/*  Profile Card */}
           <Card className="bg-white shadow-xl">
             <CardHeader className="text-center bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-t-lg">
               <div className="mx-auto w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-4">
                 <User className="w-8 h-8" />
               </div>
-              <CardTitle className="text-2xl">Perfil Demo</CardTitle>
+              <CardTitle className="text-2xl">Perfil </CardTitle>
               <CardDescription className="text-blue-100">
                 Explora la plataforma con un perfil completo
               </CardDescription>
@@ -102,7 +102,7 @@ export default function DemoLoginPage() {
               </div>
               
               <Button 
-                onClick={handleDemoLogin}
+                onClick={handleLogin}
                 disabled={isLoading}
                 className="w-full mt-6 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
                 size="lg"
@@ -119,7 +119,7 @@ export default function DemoLoginPage() {
                 ¿Qué puedes explorar?
               </CardTitle>
               <CardDescription>
-                Con el perfil demo tendrás acceso completo a:
+                Con el perfil  tendrás acceso completo a:
               </CardDescription>
             </CardHeader>
             <CardContent className="p-6">
@@ -167,7 +167,7 @@ export default function DemoLoginPage() {
               
               <div className="mt-6 p-4 bg-blue-50 rounded-lg">
                 <p className="text-sm text-blue-800">
-                  <strong>Nota:</strong> Este es un perfil de demostración con datos reales 
+                  <strong>Nota:</strong> Este es un perfil de stración con datos reales 
                   para que puedas explorar todas las funcionalidades de la plataforma.
                 </p>
               </div>

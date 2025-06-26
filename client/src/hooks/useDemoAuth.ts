@@ -1,28 +1,28 @@
 import { useState, useEffect } from 'react';
 
-interface DemoUser {
+interface User {
   id: number;
   uid: string;
   email: string;
   profile: any;
 }
 
-export const useDemoAuth = () => {
-  const [user, setUser] = useState<DemoUser | null>(null);
+export const useAuth = () => {
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is in demo mode
-    const demoUser = localStorage.getItem('demoUser');
-    if (demoUser) {
-      setUser(JSON.parse(demoUser));
+    // Check if user is in  mode
+    const User = localStorage.getItem('User');
+    if (User) {
+      setUser(JSON.parse(User));
     }
     setLoading(false);
   }, []);
 
-  const loginDemo = async () => {
+  const login = async () => {
     try {
-      const response = await fetch("/api/auth/demo-login", {
+      const response = await fetch("/api/auth/-login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -31,28 +31,28 @@ export const useDemoAuth = () => {
 
       if (response.ok) {
         const data = await response.json();
-        const demoUser = {
+        const User = {
           id: data.user.id,
           uid: data.user.firebaseUid,
           email: data.user.email,
           profile: data.user
         };
         
-        localStorage.setItem('demoUser', JSON.stringify(demoUser));
-        setUser(demoUser);
+        localStorage.setItem('User', JSON.stringify(User));
+        setUser(User);
         return { success: true, message: data.message };
       } else {
-        throw new Error("Error en el acceso demo");
+        throw new Error("Error en el acceso ");
       }
     } catch (error) {
-      return { success: false, error: "No se pudo acceder al perfil demo" };
+      return { success: false, error: "No se pudo acceder al perfil " };
     }
   };
 
-  const logoutDemo = () => {
-    localStorage.removeItem('demoUser');
+  const logout = () => {
+    localStorage.removeItem('User');
     setUser(null);
   };
 
-  return { user, loading, loginDemo, logoutDemo };
+  return { user, loading, login, logout };
 };
