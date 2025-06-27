@@ -70,10 +70,8 @@ export class MemStorage implements IStorage {
     // this.initializeDefaultData();
   }
 
-  
   public initializeDefaultData() {
     console.warn("⚠️ Datos demo inicializados manualmente (solo para pruebas)");
-    
   }
 
   async getUser(id: number): Promise<User | undefined> {
@@ -155,4 +153,9 @@ export class MemStorage implements IStorage {
       createdAt: new Date(),
       skills: opportunity.skills || [],
       sdgs: opportunity.sdgs || [],
-      isActive: opportunity.isActive ?? true
+      isActive: opportunity.isActive ?? true,
+    };
+    this.opportunities.set(id, newOpp);
+    return newOpp;
+  }
+}
