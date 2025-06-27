@@ -159,3 +159,4 @@ export class MemStorage implements IStorage {
     return newOpp;
   }
 }
+export const storage = new MemStorage();
