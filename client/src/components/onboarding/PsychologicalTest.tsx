@@ -208,7 +208,7 @@ export function PsychologicalTest({ onComplete }: PsychologicalTestProps) {
         volunteeringSuggestions: getVolunteeringSuggestions(topStrength)
       };
 
-      await saveAssessmentResults(user.uid, 'gallup', answers, results);
+      await saveAssessmentResults(user.id, 'gallup', answers, results);
 
       toast({
         title: "Evaluación completada",

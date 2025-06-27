@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 interface User {
   id: number;
-  uid: string;
+  id: string;
   email: string;
   profile: any;
 }
@@ -33,7 +33,7 @@ export const useAuth = () => {
         const data = await response.json();
         const User = {
           id: data.user.id,
-          uid: data.user.firebaseUid,
+          id: data.user.firebaseUid,
           email: data.user.email,
           profile: data.user
         };

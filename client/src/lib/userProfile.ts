@@ -1,14 +1,14 @@
 import { supabase } from './supabase';
 
 export const saveUserProfile = async ({
-  uid,
+  id,
   name,
   role = 'employee',
   department,
   location,
   interests,
 }: {
-  uid: string;
+  id: string;
   name: string;
   role?: string;
   department: string;
@@ -20,7 +20,7 @@ export const saveUserProfile = async ({
     .upsert(
       [
         {
-          id: uid,
+          id: id,
           name,
           role,
           department,

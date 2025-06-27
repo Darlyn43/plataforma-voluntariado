@@ -1,122 +1,107 @@
-import { pgTable, text, serial, integer, boolean, timestamp, jsonb, varchar } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  text,
+  uuid,
+  integer,
+  boolean,
+  timestamp,
+  jsonb,
+  serial
+} from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
+// Users
 export const users = pgTable("users", {
-  id: serial("id").primaryKey(),
+  id: uuid("id").primaryKey().defaultRandom(),
   email: text("email").notNull().unique(),
-  firebaseUid: text("firebase_uid").notNull().unique(),
-  firstName: text("first_name").notNull(),
-  lastName: text("last_name").notNull(),
-  department: text("department").notNull(),
-  location: text("location").notNull(),
-  role: text("role").notNull().default("employee"), // employee | admin
-  isFirstLogin: boolean("is_first_login").default(true),
-  profileCompleted: boolean("profile_completed").default(false),
-  testsCompleted: boolean("tests_completed").default(false),
-  interests: jsonb("interests").$type<string[]>().default([]),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  name: text("name"),
+  phone: text("phone"),
+  profileCompleted: boolean("profilecompleted").default(false),
+  role: text("role").default("employee"),
+  department: text("department"),
+  location: text("location"),
+  interest: jsonb("interest").$type<string[]>().default([]),
+  created_at: timestamp("created_at").defaultNow()
 });
 
-export const psychologicalAssessments = pgTable("psychological_assessments", {
-  id: serial("id").primaryKey(),
-  userId: integer("user_id").references(() => users.id).notNull(),
-  testType: text("test_type").notNull(), // gallup | epi
-  responses: jsonb("responses").$type<Record<string, any>>().notNull(),
-  results: jsonb("results").$type<Record<string, any>>().notNull(),
-  completedAt: timestamp("completed_at").defaultNow(),
-});
-
+// Volunteer Opportunities
 export const volunteerOpportunities = pgTable("volunteer_opportunities", {
-  id: serial("id").primaryKey(),
+  id: uuid("id").primaryKey().defaultRandom(),
   title: text("title").notNull(),
-  description: text("description").notNull(),
-  type: text("type").notNull(), // lab | mision
-  location: text("location").notNull(),
-  startDate: timestamp("start_date").notNull(),
-  endDate: timestamp("end_date"),
-  duration: integer("duration").notNull(), // hours
-  maxVolunteers: integer("max_volunteers").notNull(),
-  currentVolunteers: integer("current_volunteers").default(0),
+  description: text("description"),
+  type: text("type").notNull(),
+  location: text("location"),
+  start_date: timestamp("start_date"),
+  duration: integer("duration"),
+  max_volunteers: integer("max_volunteers"),
+  current_volunteers: integer("current_volunteers").default(0),
   skills: jsonb("skills").$type<string[]>().default([]),
   sdgs: jsonb("sdgs").$type<string[]>().default([]),
-  isActive: boolean("is_active").default(true),
-  createdBy: integer("created_by").references(() => users.id).notNull(),
-  createdAt: timestamp("created_at").defaultNow(),
+  created_at: timestamp("created_at").defaultNow()
 });
 
+// Participations
 export const participations = pgTable("participations", {
-  id: serial("id").primaryKey(),
-  userId: integer("user_id").references(() => users.id).notNull(),
-  opportunityId: integer("opportunity_id").references(() => volunteerOpportunities.id).notNull(),
-  status: text("status").notNull().default("applied"), // applied | confirmed | completed | cancelled
-  hoursCompleted: integer("hours_completed").default(0),
-  feedback: text("feedback"),
-  rating: integer("rating"),
-  joinedAt: timestamp("joined_at").defaultNow(),
-  completedAt: timestamp("completed_at"),
+  id: uuid("id").primaryKey().defaultRandom(),
+  user_id: uuid("user_id").references(() => users.id).notNull(),
+  opportunity_id: uuid("opportunity_id").references(() => volunteerOpportunities.id).notNull(),
+  hoursCompleted: integer("hourscompleted").default(0),
+  status: text("status").default("pending"),
+  created_at: timestamp("created_at").defaultNow()
 });
 
+// Psychological Assessments
+export const psychologicalAssessments = pgTable("psychological_assessments", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  user_id: uuid("user_id").references(() => users.id).notNull(),
+  traits: jsonb("traits").$type<Record<string, number>>(),
+  created_at: timestamp("created_at").defaultNow()
+});
+
+// Badges
 export const badges = pgTable("badges", {
-  id: serial("id").primaryKey(),
+  id: uuid("id").primaryKey().defaultRandom(),
   name: text("name").notNull(),
-  description: text("description").notNull(),
-  icon: text("icon").notNull(),
-  criteria: jsonb("criteria").$type<Record<string, any>>().notNull(),
-  points: integer("points").notNull(),
+  description: text("description"),
+  icon: text("icon"),
+  criteria: text("criteria"),
+  created_at: timestamp("created_at").defaultNow()
 });
 
+// User Badges
 export const userBadges = pgTable("user_badges", {
-  id: serial("id").primaryKey(),
-  userId: integer("user_id").references(() => users.id).notNull(),
-  badgeId: integer("badge_id").references(() => badges.id).notNull(),
-  earnedAt: timestamp("earned_at").defaultNow(),
+  id: uuid("id").primaryKey().defaultRandom(),
+  user_id: uuid("user_id").references(() => users.id).notNull(),
+  badge_id: uuid("badge_id").references(() => badges.id).notNull(),
+  awarded_at: timestamp("awarded_at").defaultNow()
 });
 
+// Notifications
 export const notifications = pgTable("notifications", {
-  id: serial("id").primaryKey(),
-  userId: integer("user_id").references(() => users.id).notNull(),
-  title: text("title").notNull(),
-  message: text("message").notNull(),
-  type: text("type").notNull(), // reminder | achievement | opportunity
-  isRead: boolean("is_read").default(false),
-  createdAt: timestamp("created_at").defaultNow(),
+  id: uuid("id").primaryKey().defaultRandom(),
+  user_id: uuid("user_id").references(() => users.id).notNull(),
+  title: text("title"),
+  message: text("message"),
+  read: boolean("read").default(false),
+  created_at: timestamp("created_at").defaultNow()
 });
 
 // Insert schemas
-export const insertUserSchema = createInsertSchema(users).omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-});
-
-export const insertAssessmentSchema = createInsertSchema(psychologicalAssessments).omit({
-  id: true,
-  completedAt: true,
-});
-
-export const insertOpportunitySchema = createInsertSchema(volunteerOpportunities).omit({
-  id: true,
-  createdAt: true,
-  currentVolunteers: true,
-});
-
-export const insertParticipationSchema = createInsertSchema(participations).omit({
-  id: true,
-  joinedAt: true,
-  completedAt: true,
-});
+export const insertUserSchema = createInsertSchema(users).omit({ id: true, created_at: true });
+export const insertOpportunitySchema = createInsertSchema(volunteerOpportunities).omit({ id: true, created_at: true });
+export const insertParticipationSchema = createInsertSchema(participations).omit({ id: true, created_at: true });
+export const insertAssessmentSchema = createInsertSchema(psychologicalAssessments).omit({ id: true, created_at: true });
 
 // Types
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
-export type PsychologicalAssessment = typeof psychologicalAssessments.$inferSelect;
-export type InsertAssessment = z.infer<typeof insertAssessmentSchema>;
 export type VolunteerOpportunity = typeof volunteerOpportunities.$inferSelect;
 export type InsertOpportunity = z.infer<typeof insertOpportunitySchema>;
 export type Participation = typeof participations.$inferSelect;
 export type InsertParticipation = z.infer<typeof insertParticipationSchema>;
+export type PsychologicalAssessment = typeof psychologicalAssessments.$inferSelect;
+export type InsertAssessment = z.infer<typeof insertAssessmentSchema>;
 export type Badge = typeof badges.$inferSelect;
 export type UserBadge = typeof userBadges.$inferSelect;
 export type Notification = typeof notifications.$inferSelect;

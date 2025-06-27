@@ -1,46 +1,24 @@
 #!/bin/bash
 
-# Manuchar Perú Volunteer Platform Deployment Script
+# Manuchar Perú Volunteer Platform Deployment Script (Supabase Version)
 
 echo "🚀 Iniciando deployment de Manuchar Perú Voluntariado..."
 
-# Check if Firebase CLI is installed
-if ! command -v firebase &> /dev/null; then
-    echo "Firebase CLI no está instalado. Instalando..."
-    npm install -g firebase-tools
-fi
+# Limpiar carpeta dist anterior
+rm -rf dist
 
-# Check if user is logged in to Firebase
-if ! firebase projects:list &> /dev/null; then
-    echo "Por favor, autentícate con Firebase:"
-    firebase login
-fi
-
-# Set Firebase project
-echo "Configurando proyecto Firebase..."
-firebase use manuchar-peru-voluntariado --add
-
-# Install dependencies
-echo "Instalando dependencias..."
+# Instalar dependencias
+echo "📦 Instalando dependencias..."
 npm install
 
-# Build the application
-echo "Construyendo aplicación..."
-npm run build
+# Construir frontend
+echo "🧱 Construyendo frontend con Vite..."
+npx vite build --mode=production --outDir=dist
 
-# Build for hosting specifically
-echo "Preparando archivos para hosting..."
-npx vite build --outDir dist
+# Construir backend (usando esbuild)
+echo "🧠 Empaquetando backend con esbuild..."
+npx esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
 
-# Deploy to Firebase
-echo "Desplegando a Firebase Hosting..."
-firebase deploy --only hosting
-
-echo "✅ Deployment completado!"
-echo "📱 Tu aplicación está disponible en: https://manuchar-peru-voluntariado.web.app"
+echo "✅ Build completado correctamente!"
 echo ""
-echo "🔧 No olvides configurar en Firebase Console:"
-echo "   1. Autenticación Email/Password habilitada"
-echo "   2. Base de datos Firestore creada"
-echo "   3. Dominios autorizados agregados"
-echo "   4. Variables de entorno configuradas"
+echo "🛫 Ahora puedes desplegarlos usando tu plataforma preferida (Netlify, Vercel, Fly.io, etc.)"

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 
 interface AuthUser {
-  uid: string;
+  id: string;
   email: string;
   profile?: any;
 }
@@ -24,7 +24,7 @@ export const useAuth = () => {
           .single();
 
         setUser({
-          uid: currentUser.id,
+          id: currentUser.id,
           email: currentUser.email!,
           profile: profile || {},
         });
@@ -48,7 +48,7 @@ export const useAuth = () => {
           .single();
 
         setUser({
-          uid: currentUser.id,
+          id: currentUser.id,
           email: currentUser.email!,
           profile: profile || {},
         });

@@ -39,7 +39,7 @@ export function EmployeeDashboard() {
     try {
       const [opps, parts] = await Promise.all([
         getVolunteerOpportunities(),
-        getUserParticipations(user.uid)
+        getUserParticipations(user.id)
       ]);
 
       // Add mock match percentage for demonstration
@@ -65,7 +65,7 @@ export function EmployeeDashboard() {
     if (!user) return;
 
     try {
-      await joinOpportunity(user.uid, opportunityId);
+      await joinOpportunity(user.id, opportunityId);
       toast({
         title: "¡Excelente!",
         description: "Te has unido al proyecto de voluntariado.",

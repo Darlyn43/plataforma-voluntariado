@@ -13,7 +13,7 @@ export default function OnboardingPage() {
   const handleProfileComplete = async ({ name, role }: { name: string; role: string }) => {
     try {
       await saveUserProfile({
-        uid: user!.uid,
+        id: user!.id,
         name,
         role: role || 'employee',
       });

@@ -16,10 +16,10 @@ try {
       rollupOptions: {
         output: {
           manualChunks: {
-            vendor: ['react', 'react-dom'],
-            firebase: ['firebase/app', 'firebase/auth', 'firebase/firestore'],
-            ui: ['@radix-ui/react-accordion', '@radix-ui/react-dialog']
-          }
+           vendor: ['react', 'react-dom'],
+           ui: ['@radix-ui/react-accordion', '@radix-ui/react-dialog']
+         }
+
         }
       }
     }

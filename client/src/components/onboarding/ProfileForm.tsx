@@ -85,7 +85,7 @@ export function ProfileForm({ onComplete }: ProfileFormProps) {
     setIsLoading(true);
     try {
       await saveUserProfile({
-        uid: user.uid,
+        id: user.id,
         name: `${data.firstName} ${data.lastName}`,
         role: 'employee',
       });
