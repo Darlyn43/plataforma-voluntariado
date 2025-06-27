@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+
 import {
   type User,
   type InsertUser,
